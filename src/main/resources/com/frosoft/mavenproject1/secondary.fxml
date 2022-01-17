@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.frosoft.mavenproject1.SecondaryController">
+   <children>
+      <ImageView fx:id="bg" fitHeight="620.0" fitWidth="865.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../media/bg.jpg" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#aecfec" height="576.0" opacity="0.43" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="269.0" />
+      <ImageView fx:id="ivinsurance" fitHeight="122.0" fitWidth="149.0" layoutX="75.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../media/Insurance.png" />
+         </image>
+      </ImageView>
+        <Button fx:id="bBill" layoutX="106.0" layoutY="210.0" onAction="#bill" text="Bill Info" />
+      <Button fx:id="bLogout" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#logout" prefHeight="13.0" prefWidth="50.0" textOverrun="WORD_ELLIPSIS" AnchorPane.bottomAnchor="29.199999999999932" AnchorPane.rightAnchor="14.399999999999977">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <ImageView fx:id="ivReport" fitHeight="122.0" fitWidth="136.0" layoutX="75.0" layoutY="322.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="bReport" layoutX="83.0" layoutY="459.0" onAction="#report" text="Medical Reports" />
+   </children>
+</AnchorPane>

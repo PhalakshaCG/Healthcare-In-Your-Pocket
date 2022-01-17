@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane id="AnchorPane" prefHeight="520.0" prefWidth="875.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.frosoft.mavenproject1.Secondary_staffController">
+   <children>
+      <ImageView fx:id="bg" fitHeight="649.0" fitWidth="876.0" layoutX="-1.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../media/bg.jpg" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#aecfec" height="201.0" layoutX="72.0" layoutY="234.0" opacity="0.43" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="646.0" />
+      <ImageView fx:id="ivPatient" fitHeight="110.0" fitWidth="120.0" layoutX="160.0" layoutY="265.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../media/patient.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="bPatient" layoutX="174.0" layoutY="389.0" onAction="#patientList" text="Patient Details" />
+      <Button fx:id="bDoctor" layoutX="552.0" layoutY="389.0" mnemonicParsing="false" onAction="#doctor" text="Doctor's DB" />
+      <ImageView fx:id="ivDoctor" fitHeight="99.0" fitWidth="110.0" layoutX="537.0" layoutY="265.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../media/doctor.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="bLogout" layoutX="833.0" layoutY="543.0" mnemonicParsing="false" onAction="#logout" AnchorPane.bottomAnchor="14.399999999999999" AnchorPane.rightAnchor="26.0" />
+   </children>
+</AnchorPane>

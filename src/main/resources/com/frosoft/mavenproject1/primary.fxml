@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<FlowPane alignment="CENTER" columnHalignment="CENTER" prefHeight="600.0" prefWidth="800.0" prefWrapLength="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.frosoft.mavenproject1.PrimaryController">
+   <children>
+      <AnchorPane prefHeight="630.0" prefWidth="724.0">
+         <children>
+            <Label layoutX="273.0" lineSpacing="30.0" prefHeight="112.0" prefWidth="243.0" text="H I Y P" textOverrun="WORD_ELLIPSIS">
+               <font>
+                  <Font size="77.0" />
+               </font>
+            </Label>
+            <Button fx:id="login" layoutX="594.0" layoutY="435.0" onAction="#switchToSecondary" prefHeight="34.0" prefWidth="86.0" text="Login" />
+            <TextField fx:id="tfUsername" layoutX="518.0" layoutY="282.0" promptText="Type your username " />
+            <Text layoutX="520.0" layoutY="275.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" wrappingWidth="86.39999999999998">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text layoutX="520.0" layoutY="339.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" wrappingWidth="86.39999999999998">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <ImageView fx:id="iv" fitHeight="452.0" fitWidth="526.0" layoutX="-36.0" layoutY="151.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../media/adobestock_873300111-removebg-preview.png" />
+               </image>
+            </ImageView>
+            <PasswordField fx:id="tfPassword" layoutX="518.0" layoutY="344.0" promptText="Type your password" />
+            <Button fx:id="bsignUp" layoutX="490.0" layoutY="435.0" onAction="#signUp" prefHeight="34.0" prefWidth="86.0" text="Sign Up" />
+            <AnchorPane fx:id="Admin" layoutX="227.0" layoutY="139.0" opacity="0.0" prefHeight="142.0" prefWidth="304.0" style="-fx-background-color: black;">
+               <children>
+                  <Text fill="WHITE" layoutX="34.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter admin password" wrappingWidth="236.8000732421874">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                  </Text>
+                  <PasswordField fx:id="adminPassword" layoutX="77.0" layoutY="71.0" />
+                  <Button fx:id="bAdmin" layoutX="213.0" layoutY="106.0" mnemonicParsing="false" onAction="#signUpProcessing" text="Authenticate" />
+               </children>
+            </AnchorPane>
+            <Text layoutX="273.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Healthcare In Your Pocket">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Text>
+            <CheckBox fx:id="cpatient" layoutX="501.0" layoutY="392.0" mnemonicParsing="false" onAction="#patient_sel" selected="true" text="Patient" />
+            <CheckBox fx:id="cstaff" layoutX="603.0" layoutY="392.0" mnemonicParsing="false" onAction="#staff_sel" text="Staff" />
+         </children>
+      </AnchorPane>
+   </children>
+</FlowPane>
