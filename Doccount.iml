@@ -11,18 +11,18 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="org-apache-commons-codec" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:13" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:win:13" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:13" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:win:13" level="project" />
-    <orderEntry type="library" name="Maven: mysql:mysql-connector-java:8.0.13" level="project" />
-    <orderEntry type="library" name="Maven: org.mongodb:mongodb-driver-core:3.12.10" level="project" />
-    <orderEntry type="library" name="Maven: org.mongodb:bson:3.12.10" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:16" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:win:16" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:16" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:win:16" level="project" />
+    <orderEntry type="library" name="org-apache-commons-codec" level="application" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:13" level="application" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:win:13" level="application" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:13" level="application" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:win:13" level="application" />
+    <orderEntry type="library" name="Maven: mysql:mysql-connector-java:8.0.13" level="application" />
+    <orderEntry type="library" name="Maven: org.mongodb:mongodb-driver-core:3.12.10" level="application" />
+    <orderEntry type="library" name="Maven: org.mongodb:bson:3.12.10" level="application" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:16" level="application" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:win:16" level="application" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:16" level="application" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:win:16" level="application" />
     <orderEntry type="library" name="javafx-swing-17.0.2-ea+2-linux" level="project" />
   </component>
 </module>
