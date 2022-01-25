@@ -26,7 +26,7 @@ public class App extends Application {
         Image i = new Image(n.toURI().toString());
         stage.getIcons().add(i);
         PrimaryController p = new PrimaryController();
-        stage.setTitle("Doccount");
+        stage.setTitle("Healthcare In Your Pocket");
         stage.setMinHeight(630);
         stage.setMinWidth(800);
 
