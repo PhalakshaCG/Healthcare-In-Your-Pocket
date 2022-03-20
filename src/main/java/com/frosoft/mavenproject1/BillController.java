@@ -1,11 +1,17 @@
 package com.frosoft.mavenproject1;
 
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfDocument;
+import com.itextpdf.text.Document;
+import com.itextpdf.layout.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.SnapshotParameters;
@@ -21,6 +27,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
 import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageInputStream;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
 import java.sql.*;
@@ -129,7 +137,104 @@ public class BillController implements Initializable {
             bAdd4.setOpacity(0);
             bAdd5.setOpacity(0);
             bPrint.setOpacity(0);
-            Paragraph p = new Paragraph("Date Paid: "+ Calendar.getInstance().getTime());
+            //start
+            float col = 280f;
+            float colWidth[]={col};
+            File n = new File("D:\\RVCE\\JAVA\\Doccount\\media\\logo.jpg");
+            Image iAct = new Image(n.toURI().toString());
+            PdfPTable table = new PdfPTable(colWidth);
+            table.setHorizontalAlignment(PdfPTable.ALIGN_CENTER);
+            table.addCell("H.I.Y.P INVOICE");
+            //table.getRow(0).setExtraHeight(0,30000);
+            table.getRow(0).getCells()[0].setFixedHeight(50);
+            table.getRow(0).getCells()[0].setHorizontalAlignment(PdfPTable.ALIGN_CENTER);
+            table.getRow(0).getCells()[0].setPaddingTop(15);
+            table.getRow(0).getCells()[0].setBorder(Rectangle.NO_BORDER);
+            float[] f ={280f,280F,280f};
+            PdfPTable table1 = new PdfPTable(f);
+            table1.addCell("NAME: "+name.toUpperCase());
+            table1.addCell("    ");
+            table1.addCell(tMRN.getText());
+            table1.addCell("Date: "+java.util.Calendar.getInstance().get(Calendar.DATE)+"/"+java.util.Calendar.getInstance().get(Calendar.MONTH)+"/"+java.util.Calendar.getInstance().get(Calendar.YEAR));
+            table1.addCell("  ");
+            table1.addCell("STATUS: PAID");
+            table1.getRow(0).getCells()[0].setBorder(Rectangle.NO_BORDER);
+            table1.getRow(0).getCells()[1].setBorder(Rectangle.NO_BORDER);
+            table1.getRow(0).getCells()[2].setBorder(Rectangle.NO_BORDER);
+            table1.getRow(1).getCells()[0].setBorder(Rectangle.NO_BORDER);
+            table1.getRow(1).getCells()[1].setBorder(Rectangle.NO_BORDER);
+            table1.getRow(1).getCells()[2].setBorder(Rectangle.NO_BORDER);
+            PdfPTable table2 = new PdfPTable(new float[]{300, 400, 200,400,400,200,400,200});
+            table2.setLockedWidth(true);
+            table2.setSpacingBefore(50);
+            //table2.setPaddingTop(100);
+            table2.setTotalWidth(550);
+            table2.addCell("" );
+            table2.addCell("Doctor");
+            table2.addCell("" );
+            table2.addCell("" );
+            table2.addCell("Medicine");
+            table2.addCell("" );
+            table2.addCell("Test");
+            table2.addCell("" );
+            table2.addCell("Name" );
+            table2.addCell("Procedure");
+            table2.addCell("Fee" );
+            table2.addCell("Name" );
+            table2.addCell("Dosage");
+            table2.addCell("Cost" );
+            table2.addCell("Name");
+            table2.addCell("Cost" );
+            table2.getRow(0).getCells()[0].setBorder(Rectangle.NO_BORDER);
+            table2.getRow(0).getCells()[1].setBorder(Rectangle.NO_BORDER);
+            table2.getRow(0).getCells()[2].setBorder(Rectangle.NO_BORDER);
+            table2.getRow(0).getCells()[3].setBorder(Rectangle.NO_BORDER);
+            table2.getRow(0).getCells()[4].setBorder(Rectangle.NO_BORDER);
+            table2.getRow(0).getCells()[5].setBorder(Rectangle.NO_BORDER);
+            table2.getRow(0).getCells()[6].setBorder(Rectangle.NO_BORDER);
+            table2.getRow(0).getCells()[7].setBorder(Rectangle.NO_BORDER);
+            //table2.getRow(0).getCells()[8].setBorder(Rectangle.NO_BORDER);
+            for (int i = 0; i < 7; i++) {
+                table2.getRow(0).getCells()[i].setPaddingBottom(10);
+            }
+            for (int i = 0; tMedicine.getItems().size() >i||tTest.getItems().size() >i||tProcedure.getItems().size() >i; i++) {
+                if (tProcedure.getItems().size() >i) {
+                    table2.addCell(tProcedure.getItems().get(i).Doctor);
+                    table2.addCell(tProcedure.getItems().get(i).Procedure);
+                    table2.addCell(tProcedure.getItems().get(i).Cost+"");
+                }
+                if (tMedicine.getItems().size() >i) {
+                    table2.addCell(tMedicine.getItems().get(i).Name);
+                    table2.addCell(tMedicine.getItems().get(i).Dosage);
+                    table2.addCell(tMedicine.getItems().get(i).cost+"");
+                }
+                else{
+                    table2.addCell("" );
+                    table2.addCell("");
+                    table2.addCell("" );
+                }
+                if (tTest.getItems().size() >i) {
+                    table2.addCell(tTest.getItems().get(i).Name);
+                    table2.addCell(tTest.getItems().get(i).Cost+"");
+                }
+                else{
+                    table2.addCell("" );
+                    table2.addCell("");
+                }
+            }
+            /*WritableImage i2 = tMedicine.snapshot(new SnapshotParameters(),null);
+            ByteArrayOutputStream  byteOutput = new ByteArrayOutputStream();
+            ImageIO.write( SwingFXUtils.fromFXImage( i2, null ), "png", byteOutput );
+            com.itextpdf.text.Image  graph;
+            graph = com.itextpdf.text.Image.getInstance( byteOutput.toByteArray() );*/
+            com.itextpdf.text.Image i = com.itextpdf.text.Image.getInstance("D:/RVCE/JAVA/Doccount/media/logo.jpg");
+            i.scaleAbsolute(20,20);
+            document.add(i);
+            document.add(table);
+            document.add(table1);
+            document.add(table2);
+            //end
+           /* Paragraph p = new Paragraph("Date Paid: "+ Calendar.getInstance().getTime());
             WritableImage img = apMain.snapshot(new SnapshotParameters(),null);
             ByteArrayOutputStream byteOutput = new ByteArrayOutputStream();
             ImageIO.write( SwingFXUtils.fromFXImage( img, null ), "png", byteOutput );
@@ -138,6 +243,7 @@ public class BillController implements Initializable {
             graph.scaleAbsolute(500,400);
             document.add(graph);
             document.add(p);
+            */
             document.close();
             System.out.println("Done");
             if(!patient) {

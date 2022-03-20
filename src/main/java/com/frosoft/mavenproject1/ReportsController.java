@@ -8,6 +8,7 @@ import java.io.*;
 import java.net.URL;
 import java.sql.*;
 import java.util.Calendar;
+import java.util.Optional;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -15,7 +16,7 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.SnapshotParameters;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.WritableImage;
 import javafx.scene.text.Text;
 import org.apache.commons.codec.binary.Base64;
@@ -26,9 +27,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import com.mongodb.client.gridfs.GridFSBucket;
@@ -115,7 +113,7 @@ public class ReportsController implements Initializable {
     ImageView ivNew = new ImageView();
     FileChooser fileChooser = new FileChooser();
     /**
-     * Initializes the controller class.
+     * Initializes the controller class
      */
     File file;
     public ObservableList<Report> getReport() throws SQLException {
@@ -378,23 +376,30 @@ public class ReportsController implements Initializable {
         int i;
         if( (i = tReport.getSelectionModel().getFocusedIndex())==-1)
             return;
-        s="encoded"+cReport.getCellData(i);
-        System.out.println(i);
-        MongoClient mongoClient = MongoClients.create("mongodb+srv://phalaksha:Phallu*30101@cluster0.rahp2.mongodb.net/MyFirstDatabase?retryWrites=true&w=majority");
-        try {
-            Connection con =dbhospital.getConnection();
-            PreparedStatement p = con.prepareStatement("DELETE FROM report"+name+" WHERE Name = '"+cReport.getCellData(i)+"'");
-            p.execute();
-            refresh();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete Entry");
+        alert.setHeaderText("Are you sure to delete the selected report?");
+        //alert.setContentText("By clicking OK you will permanently delete the selected report");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            s = "encoded" + cReport.getCellData(i);
             System.out.println(i);
-            MongoDatabase database = mongoClient.getDatabase(""+id);
-            GridFSBucket gridBucket = GridFSBuckets.create(database);
-            gridBucket.delete(getObjectID(s));
-            ivNew.setImage(null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            mongoClient.close();
+            MongoClient mongoClient = MongoClients.create("mongodb+srv://phalaksha:Phallu*30101@cluster0.rahp2.mongodb.net/MyFirstDatabase?retryWrites=true&w=majority");
+            try {
+                Connection con = dbhospital.getConnection();
+                PreparedStatement p = con.prepareStatement("DELETE FROM report" + name + " WHERE Name = '" + cReport.getCellData(i) + "'");
+                p.execute();
+                refresh();
+                System.out.println(i);
+                MongoDatabase database = mongoClient.getDatabase("" + id);
+                GridFSBucket gridBucket = GridFSBuckets.create(database);
+                gridBucket.delete(getObjectID(s));
+                ivNew.setImage(null);
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                mongoClient.close();
+            }
         }
     }
 

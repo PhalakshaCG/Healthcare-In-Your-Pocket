@@ -7,8 +7,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.frosoft.mavenproject1.doctorController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.frosoft.mavenproject1.doctorController">
    <children>
       <ImageView fx:id="bgP" fitHeight="601.0" fitWidth="854.0" layoutX="-19.0" layoutY="-3.0" pickOnBounds="true">
          <image>
@@ -33,5 +34,10 @@
             <Font size="19.0" />
          </font>
       </Button>
+      <Text fx:id="tTime" fill="WHITE" layoutX="215.0" layoutY="559.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="336.5367431640625">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

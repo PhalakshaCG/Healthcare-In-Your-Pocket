@@ -29,9 +29,9 @@ public class App extends Application {
         stage.setTitle("Healthcare In Your Pocket");
         stage.setMinHeight(630);
         stage.setMinWidth(800);
-
         stage.setScene(scene);
         stage.show();
+
     }
     static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));

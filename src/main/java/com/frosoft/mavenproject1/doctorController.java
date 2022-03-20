@@ -13,6 +13,7 @@ import java.net.URL;
 import java.sql.*;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,15 +35,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -92,7 +91,9 @@ public class doctorController implements Initializable {
             e.printStackTrace();
         }
     }
-
+    @FXML
+    Text tTime;
+    long sum=0, n=0;
     /**
      * Initializes the controller class.
      */
@@ -141,8 +142,10 @@ public class doctorController implements Initializable {
             Logger.getLogger(doctorController.class.getName()).log(Level.SEVERE, null, ex);
         }
         pTable.setItems(e);
+        tTime.setText("Average table row render time: "+(double)(sum/n)/1000.0+"s");
     }
     public Image download( String fileName){
+
         File file;
         MongoClient client = null;
         client = MongoClients.create("mongodb+srv://phalaksha:Phallu*30101@cluster0.rahp2.mongodb.net/MyFirstDatabase?retryWrites=true&w=majority");
@@ -158,9 +161,12 @@ public class doctorController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return i4;
     }
     public ObservableList<Doctor> getDoctors() throws SQLException{
+        long strt,end,cur;
+        strt = System.currentTimeMillis();
         ObservableList<Doctor> pat = FXCollections.observableArrayList();
         Connection s = dbPatient.getConnection();
         Statement stmt = s.createStatement();
@@ -175,6 +181,11 @@ public class doctorController implements Initializable {
         while(aa.next()){
             String name = aa.getString("Name");
             pat.add(new Doctor(name,aa.getString("Specialization"),aa.getString("Contact"),aa.getInt("Fee"),download(name+".jpg")));
+            end = System.currentTimeMillis();
+            cur = end-strt;
+            sum += cur;
+            n++;
+            strt=System.currentTimeMillis();
         }
         return pat;
     }
@@ -194,18 +205,25 @@ public class doctorController implements Initializable {
             e.printStackTrace();
         }
     }
-    public void remove(){
+    public void remove() {
         int a = pTable.getSelectionModel().getFocusedIndex();
         //int i = cMRN.getCellData(a);
-        String name = cName.getCellData(a);
-        Connection s = dbPatient.getConnection();
-        try {
-            PreparedStatement prep = s.prepareStatement("DELETE FROM doctors WHERE Name = '"+name+"'");
-            prep.execute();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete Entry");
+        alert.setHeaderText("Are you sure to remove the entry for the selected doctor?");
+        //alert.setContentText("By clicking OK you will permanently delete all files related to the selected patient");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            String name = cName.getCellData(a);
+            Connection s = dbPatient.getConnection();
+            try {
+                PreparedStatement prep = s.prepareStatement("DELETE FROM doctors WHERE Name = '" + name + "'");
+                prep.execute();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+            refresh();
         }
-        refresh();
     }
     public static void exit(){
         s.close();

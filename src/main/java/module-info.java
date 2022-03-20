@@ -13,5 +13,6 @@ module com.frosoft.mavenproject1 {
     requires org.apache.commons.codec;
     requires itextpdf;
     requires javafx.swing;
+    requires layout;
 
 }

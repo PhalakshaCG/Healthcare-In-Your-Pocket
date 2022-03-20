@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,10 +22,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -150,6 +149,8 @@ public class PatientListController implements Initializable {
             int i=0;
             while(aa.next()){
              mrn=aa.getInt("MRN_Number");
+             if(aa.getString("Name").contains("$"))
+                 continue;
             report[i]=new Button("Report-"+mrn);
             bills[i]=new Button("Bill-"+mrn);
             report[i].setOnAction(event);
@@ -181,17 +182,25 @@ public class PatientListController implements Initializable {
         int i = cMRN.getCellData(a);
         String name = cName.getCellData(a);
         Connection s = dbPatient.getConnection();
-        try {
-            PreparedStatement prep = s.prepareStatement("DELETE FROM patients WHERE MRN_Number = "+i);
-            prep.execute();
-            prep = s.prepareStatement("DROP TABLE report"+name.toLowerCase(Locale.ROOT));
-            prep.execute();
-            prep = s.prepareStatement("DROP TABLE bill"+name.toLowerCase(Locale.ROOT));
-            prep.execute();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete Entry");
+        alert.setHeaderText("Are you sure to clear all data of "+name);
+        alert.setContentText("By clicking OK you will permanently delete all files related to the selected patient");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            try {
+                PreparedStatement prep = s.prepareStatement("DELETE FROM patients WHERE MRN_Number = "+i);
+                prep.execute();
+                prep = s.prepareStatement("DROP TABLE report"+name.toLowerCase(Locale.ROOT));
+                prep.execute();
+                prep = s.prepareStatement("DROP TABLE bill"+name.toLowerCase(Locale.ROOT));
+                prep.execute();
+                refresh();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
-        refresh();
+
     }
     public static void exit(){
         s.close();
