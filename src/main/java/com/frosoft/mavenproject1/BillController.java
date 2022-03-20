@@ -1,42 +1,31 @@
 package com.frosoft.mavenproject1;
 
-import com.itextpdf.layout.element.Cell;
-import com.itextpdf.layout.element.Table;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
-import javafx.event.ActionEvent;
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.PdfDocument;
-import com.itextpdf.text.Document;
-import com.itextpdf.layout.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
-import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
-import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import java.io.IOException;
 //import org.apache.pdfbox.pdmodel.PDDocument;
 //import org.apache.pdfbox.pdmodel.PDPage;
 public class BillController implements Initializable {
@@ -130,28 +119,35 @@ public class BillController implements Initializable {
         try {
             PdfWriter.getInstance(document, new FileOutputStream(new File(FILE_NAME)));
             document.open();
-            bAdd.setOpacity(0);
-            bAdd1.setOpacity(0);
-            bAdd2.setOpacity(0);
-            bAdd3.setOpacity(0);
-            bAdd4.setOpacity(0);
-            bAdd5.setOpacity(0);
-            bPrint.setOpacity(0);
+            document.setMargins(100,0,100,0);
             //start
             float col = 280f;
             float colWidth[]={col};
-            File n = new File("D:\\RVCE\\JAVA\\Doccount\\media\\logo.jpg");
-            Image iAct = new Image(n.toURI().toString());
-            PdfPTable table = new PdfPTable(colWidth);
+            PdfPTable table = new PdfPTable(new float[]{1,17});
+            com.itextpdf.text.Image imagi = com.itextpdf.text.Image.getInstance("D:/RVCE/JAVA/Doccount/media/logo.jpg");
+            imagi.scaleAbsolute(150,150);
+            table.setTotalWidth(550);
+            table.addCell(new PdfPCell(imagi));
             table.setHorizontalAlignment(PdfPTable.ALIGN_CENTER);
-            table.addCell("H.I.Y.P INVOICE");
+            Font fontH1 = new Font(Font.FontFamily.TIMES_ROMAN, 35, Font.BOLD);
+            table.addCell(new PdfPCell(new Phrase("H.I.Y.P INVOICE",fontH1)));
             //table.getRow(0).setExtraHeight(0,30000);
+            table.getRow(0).getCells()[1].setFixedHeight(50);
+            table.getRow(0).getCells()[1].setHorizontalAlignment(PdfPTable.ALIGN_CENTER);
+            table.getRow(0).getCells()[1].setVerticalAlignment(PdfPTable.ALIGN_CENTER);
+            table.getRow(0).getCells()[1].setPaddingTop(15);
+            table.getRow(0).getCells()[1].setBorder(Rectangle.NO_BORDER);
             table.getRow(0).getCells()[0].setFixedHeight(50);
             table.getRow(0).getCells()[0].setHorizontalAlignment(PdfPTable.ALIGN_CENTER);
             table.getRow(0).getCells()[0].setPaddingTop(15);
             table.getRow(0).getCells()[0].setBorder(Rectangle.NO_BORDER);
+            //table.getRow(0).getCells()[1].setAccessibleAttribute(PdfName.TEXT, new PdfObject());
+            //document.add(i);
+            table.getRow(0).getCells()[0].setFixedHeight(80);
             float[] f ={280f,280F,280f};
             PdfPTable table1 = new PdfPTable(f);
+            table1.setSpacingBefore(20);
+            table1.setTotalWidth(550);
             table1.addCell("NAME: "+name.toUpperCase());
             table1.addCell("    ");
             table1.addCell(tMRN.getText());
@@ -166,7 +162,7 @@ public class BillController implements Initializable {
             table1.getRow(1).getCells()[2].setBorder(Rectangle.NO_BORDER);
             PdfPTable table2 = new PdfPTable(new float[]{300, 400, 200,400,400,200,400,200});
             table2.setLockedWidth(true);
-            table2.setSpacingBefore(50);
+            table2.setSpacingBefore(80);
             //table2.setPaddingTop(100);
             table2.setTotalWidth(550);
             table2.addCell("" );
@@ -185,17 +181,12 @@ public class BillController implements Initializable {
             table2.addCell("Cost" );
             table2.addCell("Name");
             table2.addCell("Cost" );
-            table2.getRow(0).getCells()[0].setBorder(Rectangle.NO_BORDER);
-            table2.getRow(0).getCells()[1].setBorder(Rectangle.NO_BORDER);
-            table2.getRow(0).getCells()[2].setBorder(Rectangle.NO_BORDER);
-            table2.getRow(0).getCells()[3].setBorder(Rectangle.NO_BORDER);
-            table2.getRow(0).getCells()[4].setBorder(Rectangle.NO_BORDER);
-            table2.getRow(0).getCells()[5].setBorder(Rectangle.NO_BORDER);
-            table2.getRow(0).getCells()[6].setBorder(Rectangle.NO_BORDER);
-            table2.getRow(0).getCells()[7].setBorder(Rectangle.NO_BORDER);
-            //table2.getRow(0).getCells()[8].setBorder(Rectangle.NO_BORDER);
-            for (int i = 0; i < 7; i++) {
-                table2.getRow(0).getCells()[i].setPaddingBottom(10);
+            for (int i = 0; i < 8; i++) {
+                table2.getRow(0).getCells()[i].setFixedHeight(40f);
+                table2.getRow(0).getCells()[i].setPaddingBottom(1.5f);
+                table2.getRow(0).getCells()[i].setBackgroundColor(BaseColor.CYAN);
+                table2.getRow(0).getCells()[i].setBorder(Rectangle.NO_BORDER);
+                table2.getRow(0).getCells()[i].setPaddingTop(10);
             }
             for (int i = 0; tMedicine.getItems().size() >i||tTest.getItems().size() >i||tProcedure.getItems().size() >i; i++) {
                 if (tProcedure.getItems().size() >i) {
@@ -222,14 +213,22 @@ public class BillController implements Initializable {
                     table2.addCell("");
                 }
             }
+            for(int j=0;j<table2.getRows().size();j++) {
+                for (int i = 0; i < 8; i++) {
+                    if(i<3)
+                    table2.getRow(j).getCells()[i].setBackgroundColor(BaseColor.CYAN);
+                    else if(i<6)
+                        table2.getRow(j).getCells()[i].setBackgroundColor(BaseColor.LIGHT_GRAY);
+                    else
+                        table2.getRow(j).getCells()[i].setBackgroundColor(BaseColor.GREEN);
+                }
+            }
             /*WritableImage i2 = tMedicine.snapshot(new SnapshotParameters(),null);
             ByteArrayOutputStream  byteOutput = new ByteArrayOutputStream();
             ImageIO.write( SwingFXUtils.fromFXImage( i2, null ), "png", byteOutput );
             com.itextpdf.text.Image  graph;
             graph = com.itextpdf.text.Image.getInstance( byteOutput.toByteArray() );*/
-            com.itextpdf.text.Image i = com.itextpdf.text.Image.getInstance("D:/RVCE/JAVA/Doccount/media/logo.jpg");
-            i.scaleAbsolute(20,20);
-            document.add(i);
+
             document.add(table);
             document.add(table1);
             document.add(table2);
@@ -244,19 +243,41 @@ public class BillController implements Initializable {
             document.add(graph);
             document.add(p);
             */
+            PdfPTable table3 = new PdfPTable(new float[]{1,1});
+            table3.setSpacingBefore(130);
+            table3.addCell("Payable: ");
+            table3.addCell("Rs "+total);
+            table3.addCell("CGST: ");
+            table3.addCell("5%");
+            table3.addCell("SGST: ");
+            table3.addCell("5%");
+            table3.addCell("Total Payable: ");
+            table3.addCell("Rs "+total*1.1);
+            for (int i = 0; i < 4; i++) {
+                for (int j = 0; j < 2; j++){
+                    table3.getRow(i).getCells()[j].setBorder(Rectangle.NO_BORDER);
+                    table3.getRow(i).getCells()[1].setHorizontalAlignment(PdfPTable.ALIGN_RIGHT);
+                }
+            }
+            document.add(table3);
+            PdfPTable table4 = new PdfPTable(new float[]{1,1});
+            table4.setSpacingBefore(70);
+            table4.addCell("Place: Bangalore");
+            table4.addCell("      ");
+            table4.addCell("Time: "+java.util.Calendar.getInstance().getTime());
+            table4.addCell("SIGNATURE");
+            table4.getRow(0).getCells()[0].setHorizontalAlignment(PdfPTable.ALIGN_LEFT);
+            table4.getRow(1).getCells()[0].setHorizontalAlignment(PdfPTable.ALIGN_LEFT);
+            table4.getRow(1).getCells()[1].setHorizontalAlignment(PdfPTable.ALIGN_RIGHT);
+            for (int i = 0; i < 2; i++) {
+                for (int j = 0; j < 2; j++){
+                    table4.getRow(i).getCells()[j].setBorder(Rectangle.NO_BORDER);
+                    //table3.getRow(i).getCells()[1].setHorizontalAlignment(PdfPTable.ALIGN_RIGHT);
+                }
+            }
+            document.add(table4);
             document.close();
             System.out.println("Done");
-            if(!patient) {
-                bAdd.setOpacity(1);
-                bAdd1.setOpacity(1);
-                bAdd2.setOpacity(1);
-                bAdd3.setOpacity(1);
-                bAdd4.setOpacity(1);
-                bAdd5.setOpacity(1);
-                bPrint.setOpacity(1);
-            }
-            bPrint.setOpacity(1);
-            ivDownload.setOpacity(1);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -358,7 +379,7 @@ public class BillController implements Initializable {
             name = PrimaryController.patientName.toLowerCase(Locale.ROOT);
         }
         File file = new File("D:\\RVCE\\JAVA\\Doccount\\media\\bg4.jpg");
-        Image i = new Image(file.toURI().toString());
+        javafx.scene.image.Image i = new javafx.scene.image.Image(file.toURI().toString());
         ivBg.setImage(i);
         if(!patient){
         try {
@@ -385,7 +406,7 @@ public class BillController implements Initializable {
         tMRN.setText("MRN: "+ID);
         ImageView ivLogout = new ImageView();
         File n = new File("D:\\RVCE\\JAVA\\Doccount\\media\\logout.png");
-        Image img = new Image(n.toURI().toString());
+        javafx.scene.image.Image img = new javafx.scene.image.Image(n.toURI().toString());
         ivLogout.setImage(img);
         ivLogout.setFitHeight(20);
         ivLogout.setFitWidth(20);
